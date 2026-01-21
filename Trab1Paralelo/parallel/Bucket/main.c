@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <omp.h>
 
-#define MAX 5  // Número de Buckets
+#define MAX 10  // Número de Buckets
 
 // Função para encontrar o valor máximo em um array
 float findMax(float array[], int n) {
@@ -54,7 +54,7 @@ void bucketSort(float array[], int n) {
     // Ordenar cada bucket paralelamente
     #pragma omp parallel for
     for (int i = 0; i < bucketCount; i++) {
-        printf("Thread %d está ordenando o bucket %d com %d elementos.\n", omp_get_thread_num(), i, bucketSizes[i]);
+        //printf("Thread %d está ordenando o bucket %d com %d elementos.\n", omp_get_thread_num(), i, bucketSizes[i]);
         if (bucketSizes[i] > 0) {
             insertionSort(buckets[i], bucketSizes[i]);
         }
@@ -106,8 +106,8 @@ int main() {
         return 1;
     }
 
-    printf("Array original: \n");
-    printArray(array, n);
+    //printf("Array original: \n");
+    //printArray(array, n);
 
     QueryPerformanceCounter(&start);
 
@@ -117,10 +117,10 @@ int main() {
 
     double time_taken = (double)(end.QuadPart - start.QuadPart) / freq.QuadPart;
 
-    printf("Array ordenado: \n");
-    printArray(array, n);
+    //printf("Array ordenado: \n");
+    //printArray(array, n);
     
-    printf("Tempo de execução: %.6f segundos\n", time_taken);
+    printf("%.10f\n", time_taken);
 
     free(array);
     return 0;

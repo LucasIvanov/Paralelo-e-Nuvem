@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <windows.h>
 
 #define MAX 10  // Número de elementos em cada bucket
 
@@ -91,6 +92,9 @@ int readFile(const char *filename, float **array) {
 }
 
 int main() {
+    LARGE_INTEGER start, end, freq;
+    QueryPerformanceFrequency(&freq);
+
     float *array = malloc(sizeof(float) * 1);
     const char *filename = "dados.txt";  // Substitua pelo nome do seu arquivo
 
@@ -99,13 +103,21 @@ int main() {
         return 1;
     }
 
-    printf("Array original: \n");
-    printArray(array, n);
+    //printf("Array original: \n");
+    //printArray(array, n);
+
+    QueryPerformanceCounter(&start);
 
     bucketSort(array, n);
 
-    printf("Array ordenado: \n");
-    printArray(array, n);
+    QueryPerformanceCounter(&end);
+
+    double time_taken = (double)(end.QuadPart - start.QuadPart) / freq.QuadPart;
+
+    //printf("Array ordenado: \n");
+    //printArray(array, n);
+
+    printf("%.10f\n", time_taken);
 
     free(array);
     return 0;

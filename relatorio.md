@@ -19,3 +19,10 @@ No arquivo fornecido pelo professor a ordenação ocorre da seguinte forma seria
 Para deixar que a ordenação ocorrece de forma paralelizada, foi utilizado a biblioteca _OpenMP_, que disponibiliza alguns ```pragmas``` para serem utilizados. Com isso foi feita da seguinte maneira a paralelização.
 - Com a inserção da biblioteca _OpenMP_, foi apenas inserido antes do _looping for_ que realizava a chamada do _Insertion Sorte_ para cada _Bucket_ um diretiva ```#pragma omp parallel for```
 Essa diretiva indica ao processador, que cada iteração do looping deve ser executava em um _threading_ separada.
+### Dados
+Em seguida sera mostrado alguns dados e métricas referentes ao codigo paralelizado.
+- No seguinte gráfico vemos o tempo gasto em segundos para a execução do código, tanto linear quanto paralelo.
+![](./Trab1Paralelo/graficos/modos.png)
+- Aqui podemos ver que para as quantidade de dados passadas para o programa a diferença do tempo de execução para os dois modos foi parecido, mas é visivel que quanto maior é o tamanho da entrada, mais vantagem temos com a paralelização
+![](./Trab1Paralelo/graficos/speedupefpng.png)
+Entradas maiores que 50000 travavam o terminal, então para manter uma certa escala, foi feitos apenas os testes com os tamanhos mostrados nos graficos.

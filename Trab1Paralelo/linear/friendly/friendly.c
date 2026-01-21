@@ -58,25 +58,37 @@ int main(int argc, char **argv) {
     LARGE_INTEGER start1, end1, freq;
     QueryPerformanceFrequency(&freq);
 
-	long int start;
-	long int end;
+    long int start;
+    long int end;
 
-	while (1) {
+    // Ponteiro para o arquivo
+    FILE *arquivo_log;
+
+    while (1) {
+        if (scanf("%ld %ld", &start, &end) != 2) break;
+        if (start == 0 && end == 0) break;
+
         QueryPerformanceCounter(&start1);
 
-		scanf("%ld %ld", &start, &end);
-		if (start == 0 && end == 0)
-			break;
-		printf("Number %ld to %ld\n", start, end);
-		friendly_numbers(start, end);
+        printf("Number %ld to %ld\n", start, end);
+        friendly_numbers(start, end);
 
         QueryPerformanceCounter(&end1);
+
         double time_taken = (double)(end1.QuadPart - start1.QuadPart) / freq.QuadPart;
-        printf("Tempo de execuÁ„o: %.6f segundos\n", time_taken);
-	}
+        printf("Tempo de execucao: %.10f segundos\n", time_taken);
 
+        // --- GRAVA√á√ÉO NO ARQUIVO ---
+        arquivo_log = fopen("tempos_execucao.txt", "a"); // "a" de append (anexar)
 
+        if (arquivo_log == NULL) {
+            printf("Erro ao abrir o arquivo!\n");
+        } else {
+            fprintf(arquivo_log, "%.10f\n", time_taken);
+            fclose(arquivo_log); // Sempre feche o arquivo ap√≥s usar
+        }
+        // ---------------------------
+    }
 
-
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }

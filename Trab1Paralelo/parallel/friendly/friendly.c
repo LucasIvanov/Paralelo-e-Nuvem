@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <math.h>
-#include <omp.h> // Adicionada para suporte ao OpenMP
+#include <omp.h>
 
 int gcd(int u, int v) {
     if (v == 0)
@@ -72,20 +72,36 @@ int main(int argc, char **argv) {
     LARGE_INTEGER start1, end1, freq;
     QueryPerformanceFrequency(&freq);
 
-    long int start, end;
+    long int start;
+    long int end;
+
+    // Ponteiro para o arquivo
+    FILE *arquivo_log;
 
     while (1) {
-        if (scanf("%ld %ld", &start, &end) != 2 || (start == 0 && end == 0))
-            break;
+        if (scanf("%ld %ld", &start, &end) != 2) break;
+        if (start == 0 && end == 0) break;
 
         QueryPerformanceCounter(&start1);
-        printf("Number %ld to %ld\n", start, end);
 
+        printf("Number %ld to %ld\n", start, end);
         friendly_numbers(start, end);
 
         QueryPerformanceCounter(&end1);
+
         double time_taken = (double)(end1.QuadPart - start1.QuadPart) / freq.QuadPart;
-        printf("Tempo de execucao: %.6f segundos\n", time_taken);
+        printf("Tempo de execucao: %.10f segundos\n", time_taken);
+
+        // --- GRAVAÇÃO NO ARQUIVO ---
+        arquivo_log = fopen("tempos_execucao.txt", "a"); // "a" de append (anexar)
+
+        if (arquivo_log == NULL) {
+            printf("Erro ao abrir o arquivo!\n");
+        } else {
+            fprintf(arquivo_log, "%.10f\n", time_taken);
+            fclose(arquivo_log); // Sempre feche o arquivo após usar
+        }
+        // ---------------------------
     }
 
     return EXIT_SUCCESS;

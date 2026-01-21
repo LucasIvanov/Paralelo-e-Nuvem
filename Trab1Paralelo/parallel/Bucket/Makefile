@@ -1,2 +1,2 @@
 all:
-	gcc -o programa main.c -O3 -fopenmp "-Wl,--stack,209715200"
+	gcc -o programa.exe main.c -O3 -fopenmp "-Wl,--stack,209715200"

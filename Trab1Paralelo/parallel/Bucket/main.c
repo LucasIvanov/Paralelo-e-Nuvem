@@ -51,7 +51,7 @@ void bucketSort(float array[], int n) {
         bucketSizes[index]++;
     }
 
-    // Ordenar cada bucket individualmente
+    // Ordenar cada bucket paralelamente
     #pragma omp parallel for
     for (int i = 0; i < bucketCount; i++) {
         printf("Thread %d está ordenando o bucket %d com %d elementos.\n", omp_get_thread_num(), i, bucketSizes[i]);

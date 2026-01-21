@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <omp.h>
 
 int gcd(int u, int v) {
 	if (v == 0)
@@ -27,6 +28,7 @@ void friendly_numbers(long int start, long int end) {
 		done = i;
 		factor = 2;
 		while (factor < done) {
+            //Paralelizar
 			if ((i % factor) == 0) {
 				sum += (factor + (i / factor));
 				if ((done = i / factor) == factor)
@@ -39,15 +41,16 @@ void friendly_numbers(long int start, long int end) {
 		n = gcd(num[ii], den[ii]);
 		num[ii] /= n;
 		den[ii] /= n;
+    //Até aqui
 	} // end for
-
+    //Apenas escrito N precisa paralelizar
 	for (i = 0; i < last; i++) {
 		for (j = i + 1; j < last; j++) {
 			if ((num[i] == num[j]) && (den[i] == den[j]))
 				printf("%ld and %ld are FRIENDLY\n", the_num[i], the_num[j]);
 		}
 	}
-
+    //N precisa paralelizar
 	free(the_num);
 	free(num);
 	free(den);

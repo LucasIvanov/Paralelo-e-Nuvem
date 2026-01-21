@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <windows.h>
 #include <math.h>
 
 int gcd(int u, int v) {
@@ -54,16 +55,28 @@ void friendly_numbers(long int start, long int end) {
 }
 
 int main(int argc, char **argv) {
+    LARGE_INTEGER start1, end1, freq;
+    QueryPerformanceFrequency(&freq);
+
 	long int start;
 	long int end;
 
 	while (1) {
+        QueryPerformanceCounter(&start1);
+
 		scanf("%ld %ld", &start, &end);
 		if (start == 0 && end == 0)
 			break;
 		printf("Number %ld to %ld\n", start, end);
 		friendly_numbers(start, end);
+
+        QueryPerformanceCounter(&end1);
+        double time_taken = (double)(end1.QuadPart - start1.QuadPart) / freq.QuadPart;
+        printf("Tempo de execução: %.6f segundos\n", time_taken);
 	}
+
+
+
 
 	return EXIT_SUCCESS;
 }

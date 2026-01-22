@@ -31,6 +31,9 @@ Em seguida sera mostrado alguns dados e métricas referentes ao codigo paraleliz
 ![](./Trab1Paralelo/graficos/modos.png)
 - Aqui podemos ver que para as quantidade de dados passadas para o programa a diferença do tempo de execução para os dois modos foi parecido, mas é visivel que quanto maior é o tamanho da entrada, mais vantagem temos com a paralelização
 ![](./Trab1Paralelo/graficos/speedupefpng.png)
+  - Azul: Speedup
+  - Laranja: Efficiency
+
 Entradas maiores que 50000 travavam o terminal, então para manter uma certa escala, foi feitos apenas os testes com os tamanhos mostrados nos graficos.
 
 ## Friendly
@@ -46,6 +49,17 @@ Para a paralelização desse código também foi utilizado a biblioteca _OpenMP_
 - Por ultimo no _looping_ aninhado que verifica as razões iguais, foi adicionado a diretiva ```#pragma omp for```, para que esse _looping_ também fosse paralelizado.
 
 ### Dados
+Em seguida sera mostrado alguns dados e métricas referentes ao codigo paralelizado.
 
+- No seguinte gráfico vemos o tempo gasto em segundos para a execução do código, tanto linear quanto paralelo. Neste código ja percebemos que o ganho de tempo com a paralelização é maior.
+
+![](./Trab1Paralelo/graficos/modosfriendly.png)
+- Aqui vemos a comparação entre _Speedup_ e eficiência para o código paralelizado, podemos perceber que no terceiro teste realizado houve uma queda no _Speedup_ assim como também ocorreu para o _BucketSort_, porem a eficiência se manteve mais estável.
+  
+![](./Trab1Paralelo/graficos/speedupeffriendly.png)
+  - Azul: Speedup
+  - Laranja: Efficiency
+
+E pelo  que é visto, a tendencia é de que quanto maior o intervalo, maior seja o ganho com a paralelização. 
 
 ## Nbody

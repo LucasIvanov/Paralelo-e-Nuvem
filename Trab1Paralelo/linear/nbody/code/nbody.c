@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include <windows.h>
 
 /*
  * pRNG based on http://www.cs.wm.edu/~va/software/park/park.html
@@ -14,8 +15,8 @@ static long seed = DEFAULT;
 
 double Random(void)
 /* ----------------------------------------------------------------
- * Random returns a pseudo-random real number uniformly distributed 
- * between 0.0 and 1.0. 
+ * Random returns a pseudo-random real number uniformly distributed
+ * between 0.0 and 1.0.
  * ----------------------------------------------------------------
  */
 {
@@ -24,9 +25,9 @@ double Random(void)
         long t;
 
   t = MULTIPLIER * (seed % Q) - R * (seed / Q);
-  if (t > 0) 
+  if (t > 0)
     seed = t;
-  else 
+  else
     seed = t + MODULUS;
   return ((double) seed / MODULUS);
 }
@@ -50,31 +51,52 @@ double ComputeNewPos( Particle [], ParticleV [], int, double);
 
 int main()
 {
-    double time;
-    Particle  * particles;   /* Particles */
-    ParticleV * pv;          /* Particle velocity */
-    int         npart, i, j;
-    int         cnt;         /* number of times in loop */
-    double      sim_t;       /* Simulation time */
+    LARGE_INTEGER start, end, freq;
+    QueryPerformanceFrequency(&freq);
+
+    Particle  * particles;
+    ParticleV * pv;
+    int        npart, i;
+    int        cnt;
+    double     sim_t;
     int tmp;
-    tmp = fscanf(stdin,"%d\n",&npart);
-    tmp = fscanf(stdin,"%d\n",&cnt);
-/* Allocate memory for particles */
+
+    if (fscanf(stdin,"%d\n",&npart) != 1) return 1;
+    if (fscanf(stdin,"%d\n",&cnt) != 1) return 1;
+
     particles = (Particle *) malloc(sizeof(Particle)*npart);
     pv = (ParticleV *) malloc(sizeof(ParticleV)*npart);
-/* Generate the initial values */
-    InitParticles( particles, pv, npart);
+
+    InitParticles(particles, pv, npart);
     sim_t = 0.0;
+
+    QueryPerformanceCounter(&start);
 
     while (cnt--) {
       double max_f;
-      /* Compute forces (2D only) */
-      max_f = ComputeForces( particles, particles, pv, npart );
-      /* Once we have the forces, we compute the changes in position */
-      sim_t += ComputeNewPos( particles, pv, npart, max_f);
+      max_f = ComputeForces(particles, particles, pv, npart);
+      sim_t += ComputeNewPos(particles, pv, npart, max_f);
     }
+
+    QueryPerformanceCounter(&end);
+
+    double time_taken = (double)(end.QuadPart - start.QuadPart) / freq.QuadPart;
+
     for (i=0; i<npart; i++)
       fprintf(stdout,"%.5lf %.5lf %.5lf\n", particles[i].x, particles[i].y, particles[i].z);
+
+    printf("\n--- Estatisticas de Execucao ---\n");
+    printf("Tempo total: %.6f segundos\n", time_taken);
+    printf("-------------------------------\n");
+
+    FILE *f = fopen("tempo_serial.txt", "a");
+    if (f) {
+        fprintf(f, "%.6f s\n", time_taken);
+        fclose(f);
+    }
+
+    free(particles);
+    free(pv);
     return 0;
 }
 

@@ -13,7 +13,7 @@ Os algoritmos escolhidos para a paralelização foram:
 
 Os métodos de paralelização foram:
 - OpenMP;
-- OpenACC.
+- OpenMPI.
 
 ## BucketSort
 No arquivo fornecido pelo professor a ordenação ocorre da seguinte forma serial:
@@ -63,3 +63,28 @@ Em seguida sera mostrado alguns dados e métricas referentes ao codigo paraleliz
 E pelo  que é visto, a tendencia é de que quanto maior o intervalo, maior seja o ganho com a paralelização. 
 
 ## Nbody
+No arquivo fornecido, o simulador de interação entre partículas ocorre da seguinte forma serial:
+  - É lido o número de partículas e a quantidade de iterações.
+  - A cada iteração, calcula-se a força de cada partícula em relação a todas as outras do sistema (complexidade O(n^2)).
+  - Com as forças obtidas, as posições são atualizadas e o passo de tempo (dt) é recalculado.
+    
+Para a paralelização desse código, foi utilizada a biblioteca MPI, e a lógica foi implementada da seguinte forma:
+  - Distribuição de Carga: O total de partículas (npart) é dividido pelo número de processos (size). Cada processo fica responsável por calcular as forças de um bloco específico de partículas (chunk).
+  - Comunicação Coletiva:
+    - Foi utilizado o MPI_Bcast para enviar os dados iniciais do processo mestre (rank 0) para todos os outros processos.
+    - Foi utilizado o MPI_Allreduce com a operação MPI_MAX para encontrar a força máxima global. Isso é necessário para que todos os processos ajustem o passo de tempo (dt) de forma sincronizada.
+  - Independência de Memória: Como o MPI trabalha com memória distribuída, cada processo calcula apenas a sua parte das forças, reduzindo o tempo de processamento proporcionalmente ao número de núcleos utilizados.
+    
+### Dados
+Em seguida sera mostrado alguns dados e métricas referentes ao codigo paralelizado.
+
+- No seguinte gráfico vemos o tempo gasto em segundos para a execução do código, tanto linear quanto paralelo. Neste código ja percebemos que o ganho de tempo com a paralelização é maior.
+  
+  ![](./Trab1Paralelo/graficos/modosnbody.png)
+- Aqui vemos a comparação do _Speedup_ para o código paralelizado. Podemos verificar uma aceleração desde o começo(como eram dois valores pequenos, acabou dar mais de 10x de aceleração) até o final, onde vemos uma aceleração de mais de 2x.
+
+  ![](./Trab1Paralelo/graficos/speedupnbody.png)
+
+A tendencia é de que quanto maior o intervalo, maior seja o ganho com a paralelização. 
+
+

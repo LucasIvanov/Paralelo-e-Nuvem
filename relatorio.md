@@ -81,7 +81,7 @@ Em seguida sera mostrado alguns dados e métricas referentes ao codigo paraleliz
 - No seguinte gráfico vemos o tempo gasto em segundos para a execução do código, tanto linear quanto paralelo. Neste código ja percebemos que o ganho de tempo com a paralelização é maior.
   
   ![](./Trab1Paralelo/graficos/modosnbody.png)
-- Aqui vemos a comparação entre _Speedup_ e eficiência para o código paralelizado. Podemos verificar uma aceleração desde o começo até o final, onde vemos uma aceleração de mais de 2x.
+- Aqui vemos a comparação do _Speedup_ para o código paralelizado. Podemos verificar uma aceleração desde o começo(como eram dois valores pequenos, acabou dar mais de 10x de aceleração) até o final, onde vemos uma aceleração de mais de 2x.
 
   ![](./Trab1Paralelo/graficos/speedupnbody.png)
 

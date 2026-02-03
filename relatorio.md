@@ -82,6 +82,7 @@ Em seguida sera mostrado alguns dados e métricas referentes ao codigo paraleliz
   
   ![](./Trab1Paralelo/graficos/modosnbody.png)
 - Aqui vemos a comparação entre _Speedup_ e eficiência para o código paralelizado. Podemos verificar uma aceleração desde o começo até o final, onde vemos uma aceleração de mais de 2x.
+
   ![](./Trab1Paralelo/graficos/speedupnbody.png)
 
 A tendencia é de que quanto maior o intervalo, maior seja o ganho com a paralelização. 

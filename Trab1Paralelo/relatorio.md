@@ -28,9 +28,9 @@ Essa diretiva indica ao processador, que cada iteração do looping deve ser exe
 ### Dados
 Em seguida sera mostrado alguns dados e métricas referentes ao codigo paralelizado.
 - No seguinte gráfico vemos o tempo gasto em segundos para a execução do código, tanto linear quanto paralelo.
-![](./Trab1Paralelo/graficos/modos.png)
+![](./graficos/modos.png)
 - Aqui podemos ver que para as quantidade de dados passadas para o programa a diferença do tempo de execução para os dois modos foi parecido, mas é visivel que quanto maior é o tamanho da entrada, mais vantagem temos com a paralelização
-![](./Trab1Paralelo/graficos/speedupefpng.png)
+![](./graficos/speedupefpng.png)
   - Azul: Speedup
   - Laranja: Efficiency
 
@@ -53,10 +53,10 @@ Em seguida sera mostrado alguns dados e métricas referentes ao codigo paraleliz
 
 - No seguinte gráfico vemos o tempo gasto em segundos para a execução do código, tanto linear quanto paralelo. Neste código ja percebemos que o ganho de tempo com a paralelização é maior.
 
-![](./Trab1Paralelo/graficos/modosfriendly.png)
+![](./graficos/modosfriendly.png)
 - Aqui vemos a comparação entre _Speedup_ e eficiência para o código paralelizado, podemos perceber que no terceiro teste realizado houve uma queda no _Speedup_ assim como também ocorreu para o _BucketSort_, porem a eficiência se manteve mais estável.
   
-![](./Trab1Paralelo/graficos/speedupeffriendly.png)
+![](./graficos/speedupeffriendly.png)
   - Azul: Speedup
   - Laranja: Efficiency
 
@@ -80,10 +80,10 @@ Em seguida sera mostrado alguns dados e métricas referentes ao codigo paraleliz
 
 - No seguinte gráfico vemos o tempo gasto em segundos para a execução do código, tanto linear quanto paralelo. Neste código ja percebemos que o ganho de tempo com a paralelização é maior.
   
-  ![](./Trab1Paralelo/graficos/modosnbody.png)
+  ![](./graficos/modosnbody.png)
 - Aqui vemos a comparação do _Speedup_ para o código paralelizado. Podemos verificar uma aceleração desde o começo(como eram dois valores pequenos, acabou dar mais de 10x de aceleração) até o final, onde vemos uma aceleração de mais de 2x.
 
-  ![](./Trab1Paralelo/graficos/speedupnbody.png)
+  ![](./graficos/speedupnbody.png)
 
 A tendencia é de que quanto maior o intervalo, maior seja o ganho com a paralelização. 
 
